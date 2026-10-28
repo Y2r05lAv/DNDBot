@@ -1,0 +1,8 @@
+SELECT pt.name AS TableName, pc.name AS ColumnName, fk.name AS ForeignKeyName
+FROM sys.foreign_keys fk
+JOIN sys.foreign_key_columns fkc ON fk.object_id = fkc.constraint_object_id
+JOIN sys.tables pt ON fkc.parent_object_id = pt.object_id
+JOIN sys.columns pc ON fkc.parent_object_id = pc.object_id AND fkc.parent_column_id = pc.column_id
+JOIN sys.tables rt ON fkc.referenced_object_id = rt.object_id
+WHERE rt.name = 'Deputies' OR rt.name = 'Parties' OR rt.name = 'Countries'
+ORDER BY rt.name, pt.name, pc.name;
