@@ -40,13 +40,21 @@ namespace DNDBot.DataBase
 
         private static void EnsureLocalDatabaseExists(SqlConnectionStringBuilder targetBuilder)
         {
-            if (string.IsNullOrWhiteSpace(targetBuilder.InitialCatalog) ||
-                string.IsNullOrWhiteSpace(targetBuilder.DataSource) ||
+            if (string.IsNullOrWhiteSpace(targetBuilder.DataSource) ||
                 targetBuilder.DataSource.IndexOf("(LocalDB)", StringComparison.OrdinalIgnoreCase) < 0 ||
-                !string.IsNullOrWhiteSpace(targetBuilder.AttachDBFilename))
+                HasAttachDatabaseFile(targetBuilder.AttachDBFilename))
             {
                 return;
             }
+
+            if (!string.IsNullOrWhiteSpace(targetBuilder.AttachDBFilename))
+            {
+                Console.WriteLine("Configured LocalDB file was not found. A new LocalDB database will be created instead.");
+                targetBuilder.AttachDBFilename = string.Empty;
+            }
+
+            if (string.IsNullOrWhiteSpace(targetBuilder.InitialCatalog))
+                targetBuilder.InitialCatalog = "DNDBot";
 
             var databaseName = targetBuilder.InitialCatalog;
             var masterBuilder = new SqlConnectionStringBuilder(targetBuilder.ConnectionString)
@@ -74,6 +82,28 @@ namespace DNDBot.DataBase
             catch (SqlException ex) when (ex.Number == 1801)
             {
             }
+        }
+
+        private static bool HasAttachDatabaseFile(string attachDatabaseFilename)
+        {
+            if (string.IsNullOrWhiteSpace(attachDatabaseFilename))
+                return false;
+
+            const string dataDirectoryToken = "|DataDirectory|";
+            string dataDirectory = AppDomain.CurrentDomain.GetData("DataDirectory") as string
+                ?? AppContext.BaseDirectory;
+
+            string candidate = attachDatabaseFilename;
+            if (candidate.StartsWith(dataDirectoryToken, StringComparison.OrdinalIgnoreCase))
+            {
+                candidate = Path.Combine(dataDirectory, candidate.Substring(dataDirectoryToken.Length).TrimStart('\\', '/'));
+            }
+
+            if (Path.IsPathRooted(candidate))
+                return File.Exists(candidate);
+
+            return File.Exists(Path.GetFullPath(candidate)) ||
+                   File.Exists(Path.Combine(AppContext.BaseDirectory, candidate));
         }
         public static int ExecuteNonQuery(string sql, params SqlParameter[] parameters)
         {
