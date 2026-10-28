@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <connectionStrings>
+    <add name="DataKey" connectionString="Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=DNDBot;Integrated Security=True;Encrypt=False;MultipleActiveResultSets=True" />
+    <add name="BotKey" connectionString="REPLACE_WITH_TELEGRAM_BOT_TOKEN" />
+    <add name="MasterId" connectionString="REPLACE_WITH_TELEGRAM_USER_ID" />
+    <add name="BotOwner" connectionString="REPLACE_WITH_TELEGRAM_USER_ID" />
+  </connectionStrings>
+</configuration>
