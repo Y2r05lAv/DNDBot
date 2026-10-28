@@ -41,3 +41,7 @@ GUI запускає бота як окремий процес і шукає й�
 Я розвивав Telegram-бота й desktop-застосунок. Частину систем державного управління та економіки створював ШІ; я не приписую собі повне авторство цих частин. Я реалізовував логіку для таких систем як інвентар, атака, створювання монстрів та ін. Для більш оптимального виконання пізніше деякі фрагменти коду були оновлено/оптимізовано за допомоги ШІ та документацій та переглянуті відповідно. 
 
 ## Скріншоти
+<img width="496" height="574" alt="image" src="https://github.com/user-attachments/assets/ed2d18d6-0ac4-473c-bfbf-462139bb53f7" />
+<img width="509" height="767" alt="image" src="https://github.com/user-attachments/assets/b5c325b4-0080-4b59-8d5e-4bd750fbc6c0" />
+<img width="522" height="796" alt="image" src="https://github.com/user-attachments/assets/4c357d97-50c0-442f-9500-b5d6f19d8be8" />
+<img width="519" height="782" alt="image" src="https://github.com/user-attachments/assets/c4556e5b-55ec-40a0-9314-feef96920fbf" />
